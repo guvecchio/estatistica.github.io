@@ -6,18 +6,23 @@ var acmFreq = 0, vetFreq_porcento = []
  let facArray = []
 
 function freqPorcento(repeticao, vetor) { // função de frequencia normal porcento
+  console.log(vetor.length + " lenght do parametro vetor")
   let aux = repeticao / vetor.length
+  console.log(aux + " variavel aux")
+
   let percentual = aux * 100
+
+  console.log(percentual + " variavel percentual")
   vetFreq_porcento.push(percentual.toFixed(0))
   vetFreq_porcento = vetFreq_porcento.map(x => parseFloat(x)) // conversão para number
 
-  
+  console.log(vetFreq_porcento + " dentro da função") 
 
 }
 
 
 
-let novoVetor = [], vetorFiltrado = [], vetorFrequencia_Simples = [], vetorSortido = []
+let novoVetor = [], vetorFiltrado = [], vetorFrequencia_Simples = [], vetorSortido
 
 function calc() {
   /* document.getElementById('resultados').innerHTML = */
@@ -28,10 +33,11 @@ function calc() {
   const inputDados = document.getElementById('entradaDados').value;
 
   if (tipoDado.value === "qualitativaOrdinal" || tipoDado.value === "qualitativaNominal") { //selecionador de quantitativa ou qualitativa
-
+    alert("QUALITATIVA")
     qualitativaFunc(inputDados);
   }
   else if (tipoDado.value === "quantitativaDiscreta") {
+    alert('QUANTITATIVA')
     quantitativaDiscreta_Func(inputDados);
   }
   else {
@@ -49,7 +55,7 @@ function calc() {
 
     novoVetor = array.split(";")
 
-    let vetorSortido = novoVetor.sort() // organiza o vetor por ordem
+     vetorSortido = novoVetor.sort() // organiza o vetor por ordem
 
 
     //---------------MEDIANA-------------
@@ -97,8 +103,65 @@ function calc() {
 
     vetorFiltrado = vetorSortido.filter((este, i) => vetorSortido.indexOf(este) === i) // tira todos itens repetidos
     // let moda = filteredArray[indiceMaior]
-    console.log(vetorFiltrado)
+
+
+
+
+
+//---------------graficos---------------
+let chart = new Chart(document.getElementById('myChart'), {
+  //tipo de gráfico
+  type: 'pie',
+
+  // dados pro dataset
+  data: {
+    labels: vetorFiltrado,
+    datasets: [{
+      label: '%',
+      backgroundColor:
+        ['rgb(255,99,132, 0.5)',
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(75, 192, 192, 0.5)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(25, 159, 64, 0.5)',
+          //-------------------//
+          'rgb(25,9,132, 0.5)',
+          'rgba(54, 150, 35, 0.5)',
+          'rgba(55, 206, 6, 0.5)',
+          'rgba(75, 92, 12, 0.5)',
+          'rgba(13, 102, 25, 0.5)',
+          'rgba(55, 59, 64, 0.5)'
+        ],
+      borderColor: '#000',
+      data: vetorFrequencia_Simples,
+      borderWidth: 0.5
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    title: {
+      display: true,
+      text: varNome
+    }
+
   }
+})
+
+
+
+
+
+  }
+
+
+
 
 
   function quantitativaDiscreta_Func(array) {  //falta adicionar o nome, mas isso é o de menos
@@ -168,6 +231,51 @@ function calc() {
 
 
 
+//------graficos--------
+let chart = new Chart(document.getElementById('myChart'), {
+  //tipo de gráfico
+  type: 'bar',
+
+  // dados pro dataset
+  data: {
+    labels: vetorFiltrado,
+    datasets: [
+      {
+        label: 'Frequência',
+        data: vetorFrequencia_Simples,
+        backgroundColor: ['rgb(255,99,132)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgb(25,9,132, 0.5)',
+          'rgba(54, 150, 35, 0.5)',
+          'rgba(55, 206, 6, 0.5)',
+          'rgba(75, 92, 12, 0.5)',
+          'rgba(13, 102, 25, 0.5)',
+          'rgba(55, 59, 64, 0.5)'
+        ],
+      borderColor: 'rgb(255,99,132)',
+      
+      borderWidth: 1
+    }]
+  },
+  options: {    
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    title: {
+      display: true,
+      text: varNome
+    }
+
+  }
+})
 
 
 
@@ -213,7 +321,8 @@ function calc() {
 
     freqPorcento(vetorFrequencia_Simples[i], vetorSortido)
 
-    console.log(vetFreq_porcento)
+    console.log(vetFreq_porcento + ' dentro do for')
+    
     var linha2 = document.createElement('tr')
     document.getElementById("coluna").appendChild(linha2)
     let coluna1 = document.createElement("td");
@@ -255,9 +364,3 @@ function calc() {
 
 btnCalcular.addEventListener("click", calc)
 btnLimpar.addEventListener("click", limpar)
-
-
-
-
-
-/* CALCULOS */
