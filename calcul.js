@@ -363,3 +363,4 @@ let chart = new Chart(document.getElementById('myChart'), {
 
 
 btnCalcular.addEventListener("click", calc)
+btnLimpar.addEventListener("click", limpar)
