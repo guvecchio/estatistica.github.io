@@ -13,7 +13,7 @@ function freqPorcento(repeticao, vetor) { // função de frequencia normal porce
   let percentual = aux * 100
 
   console.log(percentual + " variavel percentual")
-  vetFreq_porcento.push(percentual.toFixed(0))
+  vetFreq_porcento.push(percentual.toFixed(2))
   vetFreq_porcento = vetFreq_porcento.map(x => parseFloat(x)) // conversão para number
 
   console.log(vetFreq_porcento + " dentro da função") 
@@ -339,7 +339,7 @@ let chart = new Chart(document.getElementById('myChart'), {
     linha2.appendChild(coluna4);
     linha2.appendChild(coluna5);
 
-    acmFreq += Math.floor(vetFreq_porcento[i])
+    acmFreq += vetFreq_porcento[i]
 
 
     coluna1.innerHTML = vetorFiltrado[i]
@@ -363,4 +363,3 @@ let chart = new Chart(document.getElementById('myChart'), {
 
 
 btnCalcular.addEventListener("click", calc)
-btnLimpar.addEventListener("click", limpar)
