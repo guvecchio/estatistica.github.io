@@ -22,7 +22,7 @@ function freqPorcento(repeticao, vetor) { // função de frequencia normal porce
 
 
 
-let novoVetor = [], vetorFiltrado = [], vetorFrequencia_Simples = [], vetorSortido
+let novoVetor = [], vetorFiltrado = [], vetorFrequencia_Simples = [], vetorSortido, mediana, moda, mediaAux = 0, media
 
 function calc() {
   /* document.getElementById('resultados').innerHTML = */
@@ -59,8 +59,8 @@ function calc() {
 
 
     //---------------MEDIANA-------------
-    /*
-                let mediana
+  
+                 
                 let somaMediana = (vetorSortido.length / 2) - 1
                 if (vetorSortido.length % 2 == 0) {
                   mediana = [vetorSortido[somaMediana], vetorSortido[somaMediana + 1]]
@@ -70,7 +70,7 @@ function calc() {
               
                   somaMediana = Math.trunc(somaMediana)
                   mediana = vetorSortido[somaMediana]
-                }*/
+                }
 
 
 
@@ -93,66 +93,24 @@ function calc() {
       vetorFrequencia_Simples.push(freqCont); // push no array de frequencia normal
 
     }
-    // let maior = Math.max.apply(null, vetorFrequencia_Simples)
-    //let indiceMaior = (vetorFrequencia_Simples.indexOf(maior))*/
+     let maior = Math.max.apply(null, vetorFrequencia_Simples)
+    let indiceMaior = (vetorFrequencia_Simples.indexOf(maior))
 
     //------------------------FIM FREQUENCIAS -------------------------
 
 
-    //let media = "Não há"
+    
+     media = "Não há"
 
     vetorFiltrado = vetorSortido.filter((este, i) => vetorSortido.indexOf(este) === i) // tira todos itens repetidos
-    // let moda = filteredArray[indiceMaior]
+     
+     moda = vetorFiltrado[indiceMaior]
 
 
 
 
 
-//---------------graficos---------------
-let chart = new Chart(document.getElementById('myChart'), {
-  //tipo de gráfico
-  type: 'pie',
 
-  // dados pro dataset
-  data: {
-    labels: vetorFiltrado,
-    datasets: [{
-      label: '%',
-      backgroundColor:
-        ['rgb(255,99,132, 0.5)',
-          'rgba(54, 162, 235, 0.5)',
-          'rgba(255, 206, 86, 0.5)',
-          'rgba(75, 192, 192, 0.5)',
-          'rgba(153, 102, 255, 0.5)',
-          'rgba(25, 159, 64, 0.5)',
-          //-------------------//
-          'rgb(25,9,132, 0.5)',
-          'rgba(54, 150, 35, 0.5)',
-          'rgba(55, 206, 6, 0.5)',
-          'rgba(75, 92, 12, 0.5)',
-          'rgba(13, 102, 25, 0.5)',
-          'rgba(55, 59, 64, 0.5)'
-        ],
-      borderColor: '#000',
-      data: vetorFrequencia_Simples,
-      borderWidth: 0.5
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    },
-    title: {
-      display: true,
-      text: varNome
-    }
-
-  }
-})
 
 
 
@@ -176,18 +134,18 @@ let chart = new Chart(document.getElementById('myChart'), {
     vetorSortido = novoVetor.sort((a, b) => a - b); //function que o Glenio me passou para ordernar o vetor por ordem crescente
 
     //mediana 
-    /*
-      let mediana
-      let somaMediana = (sortArray.length / 2) - 1
-      if (sortArray.length % 2 == 0) {
-        mediana = [sortArray[somaMediana], sortArray[somaMediana + 1]]
+    
+       
+      let somaMediana = (vetorSortido.length / 2) - 1
+      if (vetorSortido.length % 2 == 0) {
+        mediana = [vetorSortido[somaMediana], vetorSortido[somaMediana + 1]]
       } else {
     
     
     
         somaMediana = Math.trunc(somaMediana)
-        mediana = sortArray[somaMediana]
-      }*/
+        mediana = vetorSortido[somaMediana]
+      }
 
 
 
@@ -210,11 +168,11 @@ let chart = new Chart(document.getElementById('myChart'), {
     }
 
     // moda -------------
-    /*
+    
+
+    let maior = Math.max.apply(null, vetorFrequencia_Simples)
+    let indiceMaior = (vetorFrequencia_Simples.indexOf(maior))
   
-    let maior = Math.max.apply(null, freqArray)
-    let indiceMaior = (freqArray.indexOf(maior))
-  */
 
 
 
@@ -227,55 +185,11 @@ let chart = new Chart(document.getElementById('myChart'), {
 
 
 
-    //let moda = filteredArray[indiceMaior]
+     moda = vetorFiltrado[indiceMaior]
 
 
 
-//------graficos--------
-let chart = new Chart(document.getElementById('myChart'), {
-  //tipo de gráfico
-  type: 'bar',
 
-  // dados pro dataset
-  data: {
-    labels: vetorFiltrado,
-    datasets: [
-      {
-        label: 'Frequência',
-        data: vetorFrequencia_Simples,
-        backgroundColor: ['rgb(255,99,132)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgb(25,9,132, 0.5)',
-          'rgba(54, 150, 35, 0.5)',
-          'rgba(55, 206, 6, 0.5)',
-          'rgba(75, 92, 12, 0.5)',
-          'rgba(13, 102, 25, 0.5)',
-          'rgba(55, 59, 64, 0.5)'
-        ],
-      borderColor: 'rgb(255,99,132)',
-      
-      borderWidth: 1
-    }]
-  },
-  options: {    
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
-        }
-      }]
-    },
-    title: {
-      display: true,
-      text: varNome
-    }
-
-  }
-})
 
 
 
@@ -348,10 +262,120 @@ let chart = new Chart(document.getElementById('myChart'), {
     coluna4.innerHTML = facArray[i]
     coluna5.innerHTML = acmFreq + ' %'
 
+      // media
+    mediaAux += vetorFiltrado[i] * vetorFrequencia_Simples[i]
+  
+
+
 
   }
 
+  if (tipoDado.value === "qualitativaOrdinal" || tipoDado.value === "qualitativaNominal") { //selecionador de quantitativa ou qualitativa
+    //---------------graficos--------------- QUALITATIVA
+let chart = new Chart(document.getElementById('myChart'), {
+  //tipo de gráfico
+  type: 'pie',
 
+  // dados pro dataset
+  data: {
+    labels: vetorFiltrado,
+    datasets: [{
+      label: '%',
+      backgroundColor:
+        ['rgb(255,99,132, 0.5)',
+          'rgba(54, 162, 235, 0.5)',
+          'rgba(255, 206, 86, 0.5)',
+          'rgba(75, 192, 192, 0.5)',
+          'rgba(153, 102, 255, 0.5)',
+          'rgba(25, 159, 64, 0.5)',
+          //-------------------//
+          'rgb(25,9,132, 0.5)',
+          'rgba(54, 150, 35, 0.5)',
+          'rgba(55, 206, 6, 0.5)',
+          'rgba(75, 92, 12, 0.5)',
+          'rgba(13, 102, 25, 0.5)',
+          'rgba(55, 59, 64, 0.5)'
+        ],
+      borderColor: '#000',
+      data: vetFreq_porcento,
+      borderWidth: 0.5
+    }]
+  },
+  options: {
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    title: {
+      display: true,
+      text: varNome
+    }
+
+  }
+})
+  }
+  else if (tipoDado.value === "quantitativaDiscreta") {
+    //------graficos--------QUANTITATIVA
+ console.log(vetFreq_porcento + ' vetFreq_porcento perto do grafico')
+let chart = new Chart(document.getElementById('myChart'), {
+  //tipo de gráfico
+ 
+  type: 'bar',
+  
+  // dados pro dataset
+  data: {
+    labels: vetorFiltrado,
+    datasets: [
+      {
+        label: 'Frequência',
+        backgroundColor: ['rgb(255,99,132)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)',
+          'rgb(25,9,132, 0.5)',
+          'rgba(54, 150, 35, 0.5)',
+          'rgba(55, 206, 6, 0.5)',
+          'rgba(75, 92, 12, 0.5)',
+          'rgba(13, 102, 25, 0.5)',
+          'rgba(55, 59, 64, 0.5)'
+        ],
+      borderColor: 'rgb(255,99,132)',
+      data: vetFreq_porcento,
+      borderWidth: 1
+    }]
+  },
+  options: {    
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
+    },
+    title: {
+      display: true,
+      text: varNome
+    }
+
+  }
+})
+  }
+  else {
+    alert("INVALIDO")
+  }
+
+  let freqReduce = vetorFrequencia_Simples.reduce((acumulado, n) => acumulado + n)
+
+  media = mediaAux/freqReduce
+
+  document.getElementById('moda').innerHTML = "Moda: " + moda
+  document.getElementById('media').innerHTML = "Média: " + media
+  document.getElementById('mediana').innerHTML = "Mediana: " + mediana
 
 
 
