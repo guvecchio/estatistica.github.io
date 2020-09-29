@@ -11,10 +11,20 @@
     <script src='calcul.js' defer>
     </script>   
     <script src='https://cdn.jsdelivr.net/npm/chart.js@2.8.0'></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <style>
         table {
             border-collapse: collapse;
         }
+        
+
+        #ordenar{
+           padding: 10px; 
+        }
+
         
     </style>
 </head>
@@ -32,6 +42,11 @@
                                 <div> <!-- coluna -->
                                     <label for="nomeVar" class="textoNomeVar">Nome da Variável:</label>
                                     <input name = "nome" id="nomeVar" type="text" class="nome">
+                                    22;22;22;25;25;25;25;26;26;26;30;30;30;0;30;30;40;40;40;40
+                                    <br>
+                                    / Ensino Superior; Ensino Médio; Ensino Fundamental; Ensino Fundamental; Ensino Médio; Ensino Superior; Ensino Superior;
+                                     Ensino Superior; Ensino Médio; Ensino Médio; Ensino Médio; Ensino Fundamental; Ensino Médio; Ensino Superior; Ensino Fundamental; Ensino Médio; Ensino Médio; Ensino Médio
+
                                 </div>
                             </div>
 
@@ -41,6 +56,12 @@
                                     <label for="dados" class="textoDados">Dados:</label>
                                     <input id="entradaDados" type="text" class="eDados">
                                     <input type="file" />
+                                </div>
+                                <div id="ordenarBTN">
+                                    <table id="tableOrdinal">
+
+                                    </table>
+
                                 </div>
                             </div>
 
@@ -53,13 +74,12 @@
                             
                             <!-- População | Amostra -->
                             <div> <!-- linha -->
-                                <div> <!-- coluna -->
-                                    <label>
-                                        <input name="AmPo" type="radio" id="populacaoSim"/>População
-                                    </label>
-                                    <label>
-                                        <input name="AmPo" type="radio" id="amostraSim"/>Amostra
-                                    </label>
+                                <div id="amostraPopulacao"> <!-- coluna -->Amostra ou população
+                                    <select id="amostra_populacao" > 
+                                        <option>Selecione</option>
+                                        <option value="populacao" id="populacao">População</option>
+                                        <option value='amostra' id="amostra">Amostra</option>
+                                      </select>
                                 </div>
                             </div>
 
@@ -68,13 +88,13 @@
                             <!-- Tipo de cálculo -->
                             <div> <!-- linha -->
                                 <div> <!-- coluna -->
-                                    <label for="tipoCalculo" class="tipoCalculo">Tipo:</label>
+                                    <label for="tipoCalculo" class="tipoCalculo">Tipo de variável:</label>
 
                                     <select id=tipoCalculo>
                                         <option>Selecione</option>
                                         <optgroup label="Qualitativa">
                                             <option value="qualitativaNominal">Nominal</option>
-                                            <option value="qualitativaOrdinal">Ordinal</option>
+                                            <option value="qualitativaOrdinal" id="ordinal">Ordinal</option>
                                         </optgroup>
                                         <optgroup label="Quantitativa">
                                             <option value="quantitativaDiscreta">Discreta</option>
@@ -87,8 +107,8 @@
 
                             <!-- Separatriz -->
                             <div> <!-- linha -->
-                                <div> <!-- coluna -->
-                                    <select id=separatriz>
+                                <div> <!-- coluna -->Medidas Separatrizes: 
+                                    <select id=separatriz> 
                                         <option>Selecione</option>
                                         <option>Quartil</option>
                                         <option>Quintil</option>
