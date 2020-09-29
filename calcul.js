@@ -3,19 +3,6 @@ function limpar() {
 }
 
 
-/*$( function() {
-  $( "#tableOrdinal" ).sortable();
-  $( "#tableOrdinal" ).disableSelection();
-} );*/
-
-/*$("table tbody").sortable({
-  update: function(event, ui) {
-    /*$(this).children().each(function(index) {
-      $(this).find('td').last().html(index + 1)
-    });
-  }
-});*/
-
 var corpot = document.querySelector('thead')
 var acmFreq = 0, vetFreq_porcento = []
 let facArray = []
@@ -38,15 +25,13 @@ function freqPorcento(repeticao, vetor) { // função de frequencia normal porce
 
 
 let novoVetor = [], vetorFiltrado = [], vetorFrequencia_Simples = [], vetorSortido, mediana, moda, mediaAux = 0
-//let desvioPadrao
-///let somatoriaDP
-//let coeficienteVariacao
+
 let media
+let resultadoSeparatriz
+
 
 function calc() {
-  /* document.getElementById('resultados').innerHTML = */
-  /*var vari = document.getElementById('nomeVar').value
-  alert(vari)*/
+
   const tipoDado = document.getElementById('tipoCalculo');
   const varNome = document.getElementById('nomeVar').value;
   var inputDados = document.getElementById('entradaDados').value;
@@ -64,47 +49,6 @@ function calc() {
   else {
     alert("INVALIDO")
   }
-
-
-
-
-  function qualitativaOrdinal(array) {
-    var inputOrdinal = document.createElement('input');
-    //var lbl = document.createTextNode("CLICK ME");
-
-
-    document.getElementById('ordenarBTN').appendChild(inputOrdinal)
-
-    // inputOrdinal.appendChild(lbl);
-    inputOrdinal.setAttribute('placeholder', 'INSIRA A ORDEM UM POR UM, SEPARADO POR ";')
-    inputOrdinal.setAttribute('id', 'inputOrdinal')
-
-    var inputDadosOrdinal = document.getElementById("inputOrdinal").value
-
-    var inputDadosOrdinalSplit = inputDadosOrdinal.split(';')
-
-
-    for (i = 0; i < inputDadosOrdinalSplit.length; i++) {  // função que compara um item do vetor com outro e caso for true, adiciona um contador para fazer frequencia normal
-      freqCont = 0
-
-      for (x = 0; x < inputDados.length; x++) {
-        if (inputDadosOrdinalSplit[i] === inputDados[x]) {
-          vetorUser.push(inputDados[x])
-          //freqCont++;
-        } else {
-          continue;
-        }
-      }
-      console.log(freqCont)
-
-    }
-
-
-
-
-  }
-
-
 
 
   function qualitativaFunc(array) {
@@ -384,9 +328,7 @@ function calc() {
     var vetFreq_porcento_html = document.createElement('th')
     var frequenciaAcumulada = document.createElement('th')
     var frequenciaAcumulada_Porcento = document.createElement('th')
-    //  var fi = document.createElement('th');
-    //var fper = document.createElement('th');
-    // nós
+
 
 
     // vincular
@@ -549,9 +491,15 @@ function calc() {
 
     let freqReduce = vetorFrequencia_Simples.reduce((acumulado, n) => acumulado + n)
 
+
+
+
+
+
+
     if (tipoDado.value === "qualitativaOrdinal" || tipoDado.value === "qualitativaNominal") {
 
-       media = "Não há Media"
+      media = "Não há Media"
       let desvioPadrao = "Não há Desvio Padrão"
       let coeficienteVariacao = "Não há Coeficiente de Variação"
 
@@ -576,10 +524,10 @@ function calc() {
 
 
       media = mediaAux / freqReduce
-let somatoriaDP = 0, desvioPadrao = 0, coeficienteVariacao = 0
+      let somatoriaDP = 0, desvioPadrao = 0, coeficienteVariacao = 0
 
       for (let i = 0; i < vetorFiltrado.length; i++) {
-         somatoriaDP = (((vetorFiltrado[i] - media) ** 2) * vetorFrequencia_Simples[i]) + somatoriaDP
+        somatoriaDP = (((vetorFiltrado[i] - media) ** 2) * vetorFrequencia_Simples[i]) + somatoriaDP
 
       }
       console.log(somatoriaDP + ' somatoria dp')
@@ -587,21 +535,21 @@ let somatoriaDP = 0, desvioPadrao = 0, coeficienteVariacao = 0
 
 
       if (amostra_populacao.value == 'populacao') {
-         desvioPadrao = Math.sqrt(somatoriaDP / freqReduce)
+        desvioPadrao = Math.sqrt(somatoriaDP / freqReduce)
         console.log(desvioPadrao + ' desvio padrao populacao')
 
-      } else if (amostra_populacao.value == 'amostra'){
+      } else if (amostra_populacao.value == 'amostra') {
         desvioPadrao = Math.sqrt(somatoriaDP / (freqReduce - 1))
         console.log(desvioPadrao + ' desvio padrao amostra')
       }
 
-       coeficienteVariacao = (desvioPadrao / media) * 100
+      coeficienteVariacao = (desvioPadrao / media) * 100
 
-      console.log(typeof(desvioPadrao))
-      console.log(typeof(coeficienteVariacao))
-      console.log(typeof(moda))
-      console.log(typeof(media))
-      console.log(typeof(mediana))
+      console.log(typeof (desvioPadrao))
+      console.log(typeof (coeficienteVariacao))
+      console.log(typeof (moda))
+      console.log(typeof (media))
+      console.log(typeof (mediana))
 
 
       document.getElementById('desvio_Padrao').innerHTML = "Desvio padrão: " + desvioPadrao.toFixed(2)
@@ -611,60 +559,55 @@ let somatoriaDP = 0, desvioPadrao = 0, coeficienteVariacao = 0
       document.getElementById('media').innerHTML = "Média: " + media
       document.getElementById('mediana').innerHTML = "Mediana: " + mediana
 
+
+
+
+
+
+
+
+    }
+
+    let porcento, posicao, partesIguais
+
+    let medidasUsuario = document.getElementById('medidasUsuario').value
+    let separatriz = document.getElementById('separatriz').value
+
+    if (separatriz == 'quartil') {
+      partesIguais = 4
+    } else if (separatriz == 'quintil') {
+      partesIguais = 5
+    } else if (separatriz == 'decil') {
+      partesIguais = 10
+    } else if (separatriz == 'porcentil') {
+      partesIguais = 100
+    }
+    porcento = (100 / partesIguais)
+    let medidaPorcento = (porcento * medidasUsuario) / 100
+    console.log(medidaPorcento)
+    posicao = facArray[facArray.length - 1] * medidaPorcento
+    console.log(posicao)
+
+
+
+    for (let i = 0; i < facArray.length; i++) {
+      if (posicao <= facArray[i]) {
+        resultadoSeparatriz = vetorFiltrado[i]
+        break
+      }
+
+
     }
 
 
-
-
-
-
-
-
+    document.getElementById('resultadoMedidasSeparatrizes').innerHTML = "Resultado Separatriz: " + resultadoSeparatriz
 
   }
 
 
-  /* alert(tipoDado)
-   alert(varNome)
-   alert(inputDados)*/
 
 }
 
 
 btnCalcular.addEventListener("click", calc)
 btnLimpar.addEventListener("click", limpar)
-
-
-
-
-
-
-/*function descobrirSeparatriz(vetorDadosFiltrados,freqAcumulada, medidaSeparatriz, inputUser, medida ) {
-  let porcento, medida, posicao, resultado
-  
-  porcento = ( 100/medidaSeparatriz[medida])
-  medidaPorcento = (porcento * inputUser) / 100
-  console.log(medidaPorcento)
-  posicao = freqAcumulada[freqAcumulada.length - 1] * medidaPorcento
- console.log(posicao)
-
-
-
- for(let i = 0; i < freqAcumulada.length; i++){
-   if(posicao <= freqAcumulada[i]){
-     resultado = vetorDadosFiltrados[i]
-     break
-   }
-   
-   
-}console.log('RESULTADO = ' + resultado)
-
-}
-descobrirSeparatriz()
-
-
-
-
-
-
-*/

@@ -42,11 +42,11 @@
                                 <div> <!-- coluna -->
                                     <label for="nomeVar" class="textoNomeVar">Nome da Variável:</label>
                                     <input name = "nome" id="nomeVar" type="text" class="nome">
-                                    22;22;22;25;25;25;25;26;26;26;30;30;30;0;30;30;40;40;40;40
+                                  <!--  22;22;22;25;25;25;25;26;26;26;30;30;30;0;30;30;40;40;40;40
                                     <br>
-                                    / Ensino Superior; Ensino Médio; Ensino Fundamental; Ensino Fundamental; Ensino Médio; Ensino Superior; Ensino Superior;
+                                     / Ensino Superior; Ensino Médio; Ensino Fundamental; Ensino Fundamental; Ensino Médio; Ensino Superior; Ensino Superior;
                                      Ensino Superior; Ensino Médio; Ensino Médio; Ensino Médio; Ensino Fundamental; Ensino Médio; Ensino Superior; Ensino Fundamental; Ensino Médio; Ensino Médio; Ensino Médio
-
+                                -->
                                 </div>
                             </div>
 
@@ -109,26 +109,20 @@
                             <div> <!-- linha -->
                                 <div> <!-- coluna -->Medidas Separatrizes: 
                                     <select id=separatriz> 
-                                        <option>Selecione</option>
-                                        <option>Quartil</option>
-                                        <option>Quintil</option>
-                                        <option>Decil</option>
-                                        <option>Porcentil</option>
+                                        <option value="">Selecione</option>
+                                        <option value="quartil">Quartil</option>
+                                        <option value="quintil">Quintil</option>
+                                        <option value="decil">Decil</option>
+                                        <option value="porcentil">Porcentil</option>
                                     </select>
                                 </div>
                             </div>
 
                             <!-- Partes da separatriz -->
                             <div> <!-- linha -->
-                                <div> <!-- coluna -->
-                                    <select id=tamanho>
-                                        <option>Selecione</option>
-                                        <option>Dinâmico (se quartil, de 1 a 4)</option>
-                                        <option>Dinâmico (se Quintil, de 1 a 5)</option>
-                                        <option>Dinâmico (se Decil, de 1 a 10)</option>
-                                        <option>Dinâmico (se Porcentil, de 1 a 100)</option>
-                                    </select>
-                                </div>
+                                <div> <!-- coluna --> Insira a quantidade de partes iguais desejada, de acordo  <br> com a medida separatriz selecionada anteriormente: 
+                                    <input type="number" name="" id="medidasUsuario" placeholder="APENAS NÚMEROS">
+                               (até 4 para quartil, até 5 para quintil, até 10 para decil, até 100 para porcentil) </div>
                             </div>
                     </div>
                 </div>
@@ -151,6 +145,7 @@
                 <div id="mediana"> Mediana: </div>
                 <div id="desvio_Padrao"> Desvio padrão: </div>
                 <div id="coef_Variacao"> Coeficiente de variação: </div>
+                <div id='resultadoMedidasSeparatrizes'> Resultado Medida Separatriz: </div>
                 <div id="resultados">
                     <table border="1">
                         <thead id="cabecalho">
