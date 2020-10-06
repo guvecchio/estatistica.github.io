@@ -4,8 +4,18 @@ function limpar() {
 
 
 var corpot = document.querySelector('thead')
-var acmFreq = 0, vetFreq_porcento = []
-let facArray = []
+var acmFreq = 0, vetFreq_porcento = [], vetFreq_porcento_fixed=[]
+let facArray = [], fac=0, vetorFac_Porcento=[], inicioVetor = [], fimVetor=[]
+
+function freqPorcentoContinua(frequenciasimples, vetorPorcento, reduce) { // função de frequencia normal porcento
+  for(let y = 0; y < frequenciasimples.length; y++){
+    let aux = frequenciasimples[y]/reduce
+    aux = aux * 100
+    vetorPorcento.push(aux)
+  }
+
+  
+  }
 
 function freqPorcento(repeticao, vetor) { // função de frequencia normal porcento
   console.log(vetor.length + " lenght do parametro vetor")
@@ -47,7 +57,7 @@ function calc() {
     quantitativaDiscreta_Func(inputDados);
   }
   else {
-    alert("INVALIDO")
+    quantitativaContinua(inputDados)
   }
 
 
@@ -125,7 +135,7 @@ function calc() {
         console.log(vetorSortido)
         //----------------------------FREQUENCIAS------------------------
 
-        let x, fac = 0
+        let x
         for (let i = 0; i < vetorSortido.length; i = x) {  //função que compara um item do vetor com outro e caso for true, adiciona um contador para fazer frequencia normal
           let freqCont = 1;
 
@@ -195,7 +205,7 @@ function calc() {
       console.log(vetorSortido)
       //----------------------------FREQUENCIAS------------------------
 
-      let x, fac = 0
+      let x
       for (let i = 0; i < vetorSortido.length; i = x) {  //função que compara um item do vetor com outro e caso for true, adiciona um contador para fazer frequencia normal
         let freqCont = 1;
 
@@ -271,7 +281,7 @@ function calc() {
 
 
 
-    let x, fac = 0
+    let x
     for (let i = 0; i < vetorSortido.length; i = x) {  // função que compara um item do vetor com outro e caso for true, adiciona um contador para fazer frequencia normal
       let freqCont = 1;
 
@@ -317,6 +327,465 @@ function calc() {
 
 
   }
+
+
+
+  //------------------------continua
+
+  function quantitativaContinua(array) {
+    novoVetor = array.split(";").map(x => parseFloat(x));  //separa o array por ";" e com map() passa tudo para Number float
+
+
+    const continua = novoVetor.sort((a, b) => a - b); //function que o Glenio me passou para ordernar o vetor por ordem crescente
+
+    const menor = continua[0], maior = continua[continua.length - 1]
+
+    let amplitude = maior - menor, linhas = 0, ic = 0
+
+
+
+    const j = Math.trunc(continua.length ** 0.5)
+    const i = j - 1
+    const k = j + 1
+    console.log(amplitude)
+
+
+    do {
+      amplitude++
+      console.log(amplitude)
+      if (amplitude % i == 0) {
+        linhas = i, ic = amplitude / i
+
+        break
+      }
+      else if (amplitude % j == 0) {
+        linhas = j, ic = amplitude / j
+        break
+      }
+      else if (amplitude % k == 0) {
+        linhas = k, ic = amplitude / k
+        break
+      }
+    } while (amplitude < maior)
+
+
+    criarTabelaContinua(menor, linhas, ic, continua)
+
+
+  }
+
+
+
+  function criarTabelaContinua(menor,linhas,ic,continua) {
+let inicio, fim
+    // elemento
+    var linha = document.createElement('tr')
+    document.getElementById("cabecalho").appendChild(linha)
+    var nomev = document.createElement('th');
+    var frequenciaSimples = document.createElement('th')
+    var vetFreq_porcento_html = document.createElement('th')
+    var frequenciaAcumulada = document.createElement('th')
+    var frequenciaAcumulada_Porcento = document.createElement('th')
+
+
+
+    // vincular
+
+
+    linha.appendChild(nomev)
+    linha.appendChild(frequenciaSimples)
+    linha.appendChild(vetFreq_porcento_html)
+    linha.appendChild(frequenciaAcumulada)
+    linha.appendChild(frequenciaAcumulada_Porcento)
+
+    //linha.appendChild(fi)
+    //linha.appendChild(fper)
+    nomev.innerHTML = varNome
+    frequenciaSimples.innerHTML = "Frequencia Simples"
+    vetFreq_porcento_html.innerHTML = "Frequencia Simples %"
+    frequenciaAcumulada.innerHTML = "Frequencia Acumulada"
+    frequenciaAcumulada_Porcento.innerHTML = "Frequencia Acumulada %"
+    // elementos ao doc
+    //corpot.appendChild(linha)
+
+    let elementos = [menor - 1]
+    let frequenciaSimplesContinua = []
+
+ for(let i = 1; i <= linhas; i++){ // 
+      elementos.push(elementos[i - 1] + ic)
+      frequenciaSimplesContinua.push((continua.filter(a => a >= elementos[i-1] && a < elementos[i])).length) //freq simples
+      console.log(elementos)
+
+  
+  }
+  let freqReduce = frequenciaSimplesContinua.reduce((acumulado, n) => acumulado + n)
+freqPorcentoContinua(frequenciaSimplesContinua,vetFreq_porcento , freqReduce)
+    for (let i = 0; i < linhas; i++) {
+
+      //freqPorcento(vetorFrequencia_Simples[i], vetorSortido)
+
+      //console.log(vetFreq_porcento + ' dentro do for')
+
+      var linha2 = document.createElement('tr')
+      document.getElementById("coluna").appendChild(linha2)
+      let coluna1 = document.createElement("td");
+
+      let coluna2 = document.createElement("td")
+      let coluna3 = document.createElement("td")
+      let coluna4 = document.createElement("td")
+      let coluna5 = document.createElement("td")
+
+      
+      linha2.appendChild(coluna1);
+      linha2.appendChild(coluna2);
+      linha2.appendChild(coluna3);
+      linha2.appendChild(coluna4);
+      linha2.appendChild(coluna5);
+
+      // acmFreq += vetFreq_porcento[i]
+
+
+      !inicio ? inicio = continua[0] -1 : inicio = fim
+      fim = inicio + ic
+
+      fac += frequenciaSimplesContinua[i]
+      console.log(fac)
+      facArray.push(fac)
+      acmFreq += vetFreq_porcento[i]
+
+      vetorFac_Porcento.push(acmFreq)
+
+      inicioVetor.push(`${inicio} |--- ${fim}`)
+      //fimVetor.push(fim)
+
+
+      coluna1.innerHTML = inicioVetor[i]
+      coluna2.innerHTML = frequenciaSimplesContinua[i]
+      coluna3.innerHTML = vetFreq_porcento[i].toFixed(1) + '%'
+      coluna4.innerHTML = facArray[i]
+      coluna5.innerHTML = vetorFac_Porcento[i].toFixed(1) + '%'
+
+
+/*
+      coluna3 f%
+      coluna4 fac
+      coluna5 fac%
+      desvioPadrao
+      coeficienteVariacao
+      medidaSeparatriz
+      media
+      moda
+      mediana
+
+
+      grafico
+
+*/
+      
+
+
+
+     // coluna1.innerHTML = (`${inicio} |--- ${fim}`)
+      //coluna2.innerHTML = frequenciaSimples[i]
+      /* coluna3.innerHTML = vetFreq_porcento[i] + " %"
+       coluna4.innerHTML = facArray[i]
+       coluna5.innerHTML = acmFreq + ' %'*/
+
+      // media
+      // mediaAux += vetorFiltrado[i] * vetorFrequencia_Simples[i]
+
+
+
+
+    }
+for(let z = 0; z < vetFreq_porcento.length; z++){
+  vetFreq_porcento_fixed.push((vetFreq_porcento[z].toFixed(1)))
+  
+}
+console.log(vetFreq_porcento_fixed)
+    let chart = new Chart(document.getElementById('myChart'), {
+      //tipo de gráfico
+      type: 'bar',
+
+      // dados pro dataset
+      data: {
+        labels: inicioVetor,       // inicioVetor +" |--- " + fimVetor,
+        datasets: [{
+          label: varNome,
+    
+          backgroundColor:
+            ['rgb(255,99,132, 0.5)',
+              'rgba(54, 162, 235, 0.5)',
+              'rgba(255, 206, 86, 0.5)',
+              'rgba(75, 192, 192, 0.5)',
+              'rgba(153, 102, 255, 0.5)',
+              'rgba(25, 159, 64, 0.5)',
+              //-------------------//
+              'rgb(25,9,132, 0.5)',
+              'rgba(54, 150, 35, 0.5)',
+              'rgba(55, 206, 6, 0.5)',
+              'rgba(75, 92, 12, 0.5)',
+              'rgba(13, 102, 25, 0.5)',
+              'rgba(55, 59, 64, 0.5)'
+            ],
+          borderColor: '#000',
+          data: vetFreq_porcento_fixed,// vetFreq_porcento_fixed,
+          borderWidth: 0
+          
+        }],
+  
+      },
+          options: {
+          scales: {
+            xAxes: [{
+              display: false,
+              barPercentage: 1.25,
+              ticks: {
+                  max: 3,
+              }
+           }, {
+              display: true,
+              ticks: {
+                  autoSkip: false,
+                  max: 4,
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero:true
+              }
+            }]
+          }
+        }
+    })
+
+
+   
+  
+  
+ /* for( let i = 0; i < linhas; i++){
+
+
+  
+  }*/
+
+
+    /*
+    
+        if (tipoDado.value === "qualitativaOrdinal" || tipoDado.value === "qualitativaNominal") { //selecionador de quantitativa ou qualitativa
+          //---------------graficos--------------- QUALITATIVA
+          let chart = new Chart(document.getElementById('myChart'), {
+            //tipo de gráfico
+            type: 'pie',
+    
+            // dados pro dataset
+            data: {
+              labels: vetorFiltrado,
+              datasets: [{
+                label: '%',
+                backgroundColor:
+                  ['rgb(255,99,132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(25, 159, 64, 0.5)',
+                    //-------------------//
+                    'rgb(25,9,132, 0.5)',
+                    'rgba(54, 150, 35, 0.5)',
+                    'rgba(55, 206, 6, 0.5)',
+                    'rgba(75, 92, 12, 0.5)',
+                    'rgba(13, 102, 25, 0.5)',
+                    'rgba(55, 59, 64, 0.5)'
+                  ],
+                borderColor: '#000',
+                data: vetFreq_porcento,
+                borderWidth: 0.5
+              }]
+            },
+            options: {
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }]
+              },
+              title: {
+                display: true,
+                text: varNome
+              }
+    
+            }
+          })
+        }
+        else if (tipoDado.value === "quantitativaDiscreta") {
+          //------graficos--------QUANTITATIVA
+          console.log(vetFreq_porcento + ' vetFreq_porcento perto do grafico')
+          let chart = new Chart(document.getElementById('myChart'), {
+            //tipo de gráfico
+    
+            type: 'bar',
+    
+            // dados pro dataset
+            data: {
+              labels: vetorFiltrado,
+              datasets: [
+                {
+                  label: 'Frequência',
+                  backgroundColor: ['rgb(255,99,132)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgb(25,9,132, 0.5)',
+                    'rgba(54, 150, 35, 0.5)',
+                    'rgba(55, 206, 6, 0.5)',
+                    'rgba(75, 92, 12, 0.5)',
+                    'rgba(13, 102, 25, 0.5)',
+                    'rgba(55, 59, 64, 0.5)'
+                  ],
+                  borderColor: 'rgb(255,99,132)',
+                  data: vetFreq_porcento,
+                  borderWidth: 1
+                }]
+            },
+            options: {
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }]
+              },
+              title: {
+                display: true,
+                text: varNome
+              }
+    
+            }
+          })
+        }
+        else {
+          alert("INVALIDO")
+        }
+    
+        let freqReduce = vetorFrequencia_Simples.reduce((acumulado, n) => acumulado + n)
+    
+    
+    
+    
+    
+    
+    
+        if (tipoDado.value === "qualitativaOrdinal" || tipoDado.value === "qualitativaNominal") {
+    
+          media = "Não há Media"
+          let desvioPadrao = "Não há Desvio Padrão"
+          let coeficienteVariacao = "Não há Coeficiente de Variação"
+    
+          document.getElementById('desvio_Padrao').innerHTML = "Desvio padrão: " + desvioPadrao
+          console.log(typeof (desvioPadrao))
+          document.getElementById('coef_Variacao').innerHTML = "Coeficiente de variação: " + coeficienteVariacao
+          document.getElementById('moda').innerHTML = "Moda: " + moda
+          document.getElementById('media').innerHTML = "Média: " + media
+          document.getElementById('mediana').innerHTML = "Mediana: " + mediana
+    
+          console.log(desvioPadrao)
+          console.log(coeficienteVariacao)
+          console.log(moda)
+          console.log(media)
+          console.log(mediana)
+    
+    
+    
+    
+        }
+        else if (tipoDado.value == 'quantitativaDiscreta') {
+    
+    
+          media = mediaAux / freqReduce
+          let somatoriaDP = 0, desvioPadrao = 0, coeficienteVariacao = 0
+    
+          for (let i = 0; i < vetorFiltrado.length; i++) {
+            somatoriaDP = (((vetorFiltrado[i] - media) ** 2) * vetorFrequencia_Simples[i]) + somatoriaDP
+    
+          }
+          console.log(somatoriaDP + ' somatoria dp')
+          let amostra_populacao = document.getElementById('amostra_populacao')
+    
+    
+          if (amostra_populacao.value == 'populacao') {
+            desvioPadrao = Math.sqrt(somatoriaDP / freqReduce)
+            console.log(desvioPadrao + ' desvio padrao populacao')
+    
+          } else if (amostra_populacao.value == 'amostra') {
+            desvioPadrao = Math.sqrt(somatoriaDP / (freqReduce - 1))
+            console.log(desvioPadrao + ' desvio padrao amostra')
+          }
+    
+          coeficienteVariacao = (desvioPadrao / media) * 100
+    
+          console.log(typeof (desvioPadrao))
+          console.log(typeof (coeficienteVariacao))
+          console.log(typeof (moda))
+          console.log(typeof (media))
+          console.log(typeof (mediana))
+    
+    
+          document.getElementById('desvio_Padrao').innerHTML = "Desvio padrão: " + desvioPadrao.toFixed(2)
+          console.log(typeof (desvioPadrao))
+          document.getElementById('coef_Variacao').innerHTML = "Coeficiente de variação: " + Math.round(coeficienteVariacao) + "%"
+          document.getElementById('moda').innerHTML = "Moda: " + moda
+          document.getElementById('media').innerHTML = "Média: " + media
+          document.getElementById('mediana').innerHTML = "Mediana: " + mediana
+    
+    
+    
+    
+    
+    
+    
+    
+        }
+    
+        let porcento, posicao, partesIguais
+    
+        let medidasUsuario = document.getElementById('medidasUsuario').value
+        let separatriz = document.getElementById('separatriz').value
+    
+        if (separatriz == 'quartil') {
+          partesIguais = 4
+        } else if (separatriz == 'quintil') {
+          partesIguais = 5
+        } else if (separatriz == 'decil') {
+          partesIguais = 10
+        } else if (separatriz == 'porcentil') {
+          partesIguais = 100
+        }
+        porcento = (100 / partesIguais)
+        let medidaPorcento = (porcento * medidasUsuario) / 100
+        console.log(medidaPorcento)
+        posicao = facArray[facArray.length - 1] * medidaPorcento
+        console.log(posicao)
+    
+    
+    
+        for (let i = 0; i < facArray.length; i++) {
+          if (posicao <= facArray[i]) {
+            resultadoSeparatriz = vetorFiltrado[i]
+            break
+          }
+    
+    
+        }
+    
+    
+        document.getElementById('resultadoMedidasSeparatrizes').innerHTML = "Resultado Separatriz: " + resultadoSeparatriz
+    */
+  }
+
 
   function criarTabela() {
 
