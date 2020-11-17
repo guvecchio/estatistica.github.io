@@ -121,7 +121,7 @@ function calc() {
 
         let somaMediana = (vetorSortido.length / 2) - 1
         if (vetorSortido.length % 2 == 0) {
-          mediana = (vetorSortido[somaMediana] + vetorSortido[somaMediana + 1])/2
+          mediana = [vetorSortido[somaMediana], vetorSortido[somaMediana + 1]]
         } else {
 
 
@@ -191,7 +191,7 @@ function calc() {
 
       let somaMediana = (vetorSortido.length / 2) - 1
       if (vetorSortido.length % 2 == 0) {
-        mediana = (vetorSortido[somaMediana] + vetorSortido[somaMediana + 1])/2
+        mediana = [vetorSortido[somaMediana], vetorSortido[somaMediana + 1]]
       } else {
 
 
@@ -269,7 +269,7 @@ function calc() {
 
     let somaMediana = (vetorSortido.length / 2) - 1
     if (vetorSortido.length % 2 == 0) {
-      mediana = (vetorSortido[somaMediana] + vetorSortido[somaMediana + 1]) / 2                                                              // [vetorSortido[somaMediana], vetorSortido[somaMediana + 1]]
+      mediana = [vetorSortido[somaMediana] + vetorSortido[somaMediana + 1]] / 2                                                             // [vetorSortido[somaMediana], vetorSortido[somaMediana + 1]]
     } else {
 
 
@@ -342,8 +342,8 @@ function calc() {
 
     let amplitude = maior - menor, linhas = 0, ic = 0
 
-
-
+// teste 32;46;90;40;57;32;32;33;50;42;35;38;35;41;34;52;32;75;69;44;36;42;60;56;30;38;37;79;45;37;30;32;62;50;45;41;59;31;66;39;43;33;70;50;47;30;36;40;67;39;80;89;90;35;36;89;76;78;90;49;54;63;37;36;78;89;45;56;67;78;69;47;36;57;68;79;88;76;72;91;92;93;54;65;66;38;37;48;100;65;67;89;79;89;81;82;53;65;78;90
+// k2 = 46
     const j = Math.trunc(continua.length ** 0.5)
     const i = j - 1
     const k = j + 1
@@ -377,7 +377,6 @@ function calc() {
 
 
   function criarTabelaContinua(menor, linhas, ic, continua) {
-    let inicio = 0, fim = 0
     // elemento
     var linha = document.createElement('tr')
     document.getElementById("cabecalho").appendChild(linha)
@@ -617,7 +616,7 @@ function calc() {
     // moda
     let modaCont = 0
     for (let i = 0; i < frequenciaSimplesContinua.length; i++) {
-      if (frequenciaSimplesContinua[i] > modaCont) {
+      if (frequenciaSimplesContinua[i] < modaCont) {
         modaCont++
 
       } else {
@@ -676,19 +675,34 @@ function calc() {
     let medidaPorcento = (porcento * medidasUsuario) / 100
     console.log(medidaPorcento)
     posicao = freqReduce * medidaPorcento
-    console.log(posicao)
+    
+
+
 
 
     for (let i = 0; i < facArray.length; i++) {
-      if (posicao <= facArray[i]) {
-        if (!indiceVetor - 1) {
-      resultadoSeparatriz = inicioMediana[i] + (((posicao - 0) / frequenciaSimplesContinua[indiceVetor]) * ic)
-    } else {
-      resultadoSeparatriz = inicioMediana[i] + (((posicao - facArray[indiceVetor - 1]) / frequenciaSimplesContinua[indiceVetor]) * ic)
 
-    }
-        break
-      }
+      console.log(facArray[i] + ' facarray[i]')
+      console.log(posicao + ' posiçãoooooo')
+      
+      if (posicao <= facArray[i]) {
+                        if (!indiceVetor - 1) {
+                          console.log(inicioMediana[i] +' iniciomediana - 1 "se posicao <= facArray[i]"')
+                          console.log(indiceVetor + ' indiceVetor')
+                          console.log(frequenciaSimplesContinua[indiceVetor - 1] + ' frequenciasimplescontnua[indicevetor - 1]')
+
+                      resultadoSeparatriz = inicioMediana[i] + (((posicao - facArray[indiceVetor - 2]) / frequenciaSimplesContinua[indiceVetor - 1]) * ic)
+                    } else {
+                      console.log(inicioMediana[i] + ' inicio mediana "se posicao > facArray[i]"')
+                      resultadoSeparatriz = inicioMediana[i] + (((posicao - 0) / frequenciaSimplesContinua[indiceVetor - 1]) * ic)
+
+                    }
+
+                    break
+        
+      } 
+      else{
+        continue}
 
 
     }
@@ -794,7 +808,7 @@ function calc() {
       coluna2.innerHTML = vetorFrequencia_Simples[i]
       coluna3.innerHTML = vetFreq_porcento[i] + " %"
       coluna4.innerHTML = facArray[i]
-      coluna5.innerHTML = Math.round(acmFreq) + ' %'
+      coluna5.innerHTML = Math.round(acmFreq)+ ' %'
 
       // media
       mediaAux += vetorFiltrado[i] * vetorFrequencia_Simples[i]
@@ -1025,3 +1039,6 @@ function calc() {
 
 btnCalcular.addEventListener("click", calc)
 btnLimpar.addEventListener("click", limpar)
+
+
+// ------------------------------------------------------------------   PROBABILIDADE   -------------------------------------------------------------------
