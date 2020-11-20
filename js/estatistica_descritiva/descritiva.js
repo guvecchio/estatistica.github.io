@@ -1,4 +1,4 @@
-import mergeSort2 from "./lib/mergeSort2.js"
+import mergeSort2 from "../lib/mergeSort2.js"
 
 var acmFreq = 0, vetFreq_porcento = [], vetFreq_porcento_fixed = []
 let facArray = [], fac = 0, vetorFac_Porcento = [], inicioVetor = [], fimVetor = [], inicioMediana = []
