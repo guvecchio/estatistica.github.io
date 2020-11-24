@@ -8,14 +8,13 @@ function readSingleFile(e) {
     reader.onload = function (e) {
         var contents = e.target.result;
         displayContents(contents);
-        displayParsed(contents);
     };
     reader.readAsText(file);
 }
 
 function displayContents(contents) {
     var element = document.getElementById('entradaDados');
-    element.textContent.value = contents;
+    element.value = contents;
 }
 
 document.getElementById('file-input').addEventListener('change', readSingleFile, false);
