@@ -6,7 +6,7 @@ let distribuicao_Normal = () => {
     let condicao = document.getElementById('opcoes_Dnormal').value
     let valor = document.getElementById('valor').value
     let escrever_resultado = document.getElementById('resultados')
-
+    let elemento
     const tabelaZ = [
         [0.0000, 0.0040, 0.0080, 0.0120, 0.0160, 0.0199, 0.0239, 0.0279, 0.0319, 0.0359],
         [0.0389, 0.0438, 0.0478, 0.0517, 0.0557, 0.0596, 0.0636, 0.0675, 0.0714, 0.0754],
@@ -54,7 +54,11 @@ let distribuicao_Normal = () => {
         let z = ((valor - media) / dp).toFixed(2)
         if (z < 0) z = z * -1
         let l = Math.floor(z * 10), c = (((z * 10) - l) * 10).toFixed() // realiza os calculos na hora da declaração (mudarei para uma função)
-        let elemento = tabelaZ[l][c]
+        if(z >= 4){
+            elemento = 0.5}
+            else{
+        elemento = tabelaZ[l][c]}
+        
         if (valor < media) {
             probabilidade = ((elemento + 0.5) * 100).toFixed(2)
         } else {
@@ -63,11 +67,19 @@ let distribuicao_Normal = () => {
 
         escrever_resultado.innerHTML = 'A probabilidade é de ' + probabilidade + "%"
     }
+
     else if (condicao == 'menorQue') {
+         
         let z = ((valor - media) / dp).toFixed(2)
         if (z < 0) z = z * -1
-        let l = Math.floor(z * 10), c = (((z * 10) - l) * 10).toFixed()
-        let elemento = tabelaZ[l][c]
+        let l = Math.floor(z * 10), c =Number((((z * 10) - l) * 10).toFixed())
+        if(z >= 4){
+            elemento = 0.5
+        } else{
+
+        
+     elemento = tabelaZ[l][c]}
+        console.log(elemento)
 
         if (valor < media) {
             probabilidade = ((0.5 - elemento) * 100).toFixed(2)
@@ -78,7 +90,7 @@ let distribuicao_Normal = () => {
         escrever_resultado.innerHTML = 'A probabilidade é de ' + probabilidade + "%"
     }
     else {
-        let valores = valor.split(";").map(x => Number(x))
+        let valores = valor.split(";").map(x => Number(x)), um, dois
         valores = valores.sort((a, b) => a - b);
 
         if ((valores[0] > media && valores[1] > media) || (valores[0] < media && valores[1] < media)) {
@@ -88,8 +100,11 @@ let distribuicao_Normal = () => {
             let l = Math.floor(z * 10), c = (((z * 10) - l) * 10).toFixed()
             if (l < 0) { l = l * -1 }
             if (c < 0) { c = c * -1 }
-
-            let um = tabelaZ[l][c]
+            if(z >= 4){
+                um = 0.5}
+                else{
+            um = tabelaZ[l][c]}
+            //let um = tabelaZ[l][c]
 
             z = ((valores[1] - media) / dp).toFixed(2)
             if (z < 0) { z = z * -1 }
@@ -98,8 +113,11 @@ let distribuicao_Normal = () => {
             c = (((z * 10) - l) * 10).toFixed()
             if (l < 0) { l = l * -1 }
             if (c < 0) { c = c * -1 }
-
-            let dois = tabelaZ[l][c]
+            if(z >= 4){
+                dois = 0.5}
+                else{
+            dois = tabelaZ[l][c]}
+           // let dois = tabelaZ[l][c]
 
             probabilidade = ((dois - um) * 100).toFixed(2)
             if (probabilidade < 0) probabilidade = probabilidade * -1

@@ -1,4 +1,5 @@
-import mergeSort2 from "../lib/mergeSort2.js"
+import mergeSort2 from '../lib/mergeSort2.js'
+import buscaBinaria from '../lib/buscaBinaria.js'
 
 var acmFreq = 0, vetFreq_porcento = [], vetFreq_porcento_fixed = []
 let facArray = [], fac = 0, vetorFac_Porcento = [], inicioVetor = [], fimVetor = [], inicioMediana = []
@@ -30,19 +31,23 @@ function descritiva() {
   const varNome = document.getElementById('nomeVar').value;
   var inputDados = document.getElementById('entradaDados').value;
 
-  if (tipoDado.value === "qualitativaNominal" || tipoDado.value === "qualitativaOrdinal") { //selecionador de quantitativa ou qualitativa
-    alert("QUALITATIVA")
-    qualitativa(inputDados);
+  if (inputDados === '') {
+    alert('Insira os dados para dar continuidade!')
+  } else {
 
-  }
-  else if (tipoDado.value === "quantitativaDiscreta") {
-    alert('QUANTITATIVA')
-    quantitativaDiscreta(inputDados);
-  }
-  else {
-    quantitativaContinua(inputDados)
-  }
+    if (tipoDado.value === "qualitativaNominal" || tipoDado.value === "qualitativaOrdinal") { //selecionador de quantitativa ou qualitativa
+      qualitativa(inputDados);
 
+    }
+    else if (tipoDado.value === "quantitativaDiscreta") {
+      quantitativaDiscreta(inputDados);
+    }
+    else if (tipoDado.value === 'quantitativaContinua') {
+      quantitativaContinua(inputDados)
+    } else {
+      alert("Selecione um tipo de dado para continuar a operação!")
+    }
+  }
   function qualitativa(array) {
     if (Array.isArray(array)) {
       novoVetor = array
@@ -52,7 +57,6 @@ function descritiva() {
     vetorSortido = mergeSort2(novoVetor) // organiza o vetor por ordem
 
     if (tipoDado.value === "qualitativaOrdinal") {
-      alert('ORDINAL')
       var inputOrdinal = document.createElement('input');
       var botao = document.createElement('button')
 
@@ -117,7 +121,6 @@ function descritiva() {
       })
     }
     else if (tipoDado.value === "qualitativaNominal") { //selecionador de quantitativa ou qualitativa
-      alert("NOMINAL")
 
       //---------------MEDIANA-------------
 
@@ -160,6 +163,14 @@ function descritiva() {
       criarTabela()
     }
   }
+
+
+
+
+
+
+
+
   function quantitativaDiscreta(array) {  //falta adicionar o nome, mas isso é o de menos
 
 
@@ -207,6 +218,8 @@ function descritiva() {
 
 
     let maior = Math.max.apply(null, vetorFrequencia_Simples)
+
+
     let indiceMaior = (vetorFrequencia_Simples.indexOf(maior))
 
 
@@ -280,11 +293,19 @@ function descritiva() {
     let elementos = [menor - 1]
     let frequenciaSimplesContinua = [], inicio, fim
 
+
+    console.log(elementos)
+    console.log(menor)
+
     for (let i = 1; i <= linhas; i++) { // 
       elementos.push(elementos[i - 1] + ic)
       frequenciaSimplesContinua.push((continua.filter(a => a >= elementos[i - 1] && a < elementos[i])).length) //freq simples
 
     }
+
+    console.log(elementos)
+
+    console.log(frequenciaSimplesContinua + ' freq simples continua')
     let freqReduce = frequenciaSimplesContinua.reduce((acumulado, n) => acumulado + n)
     freqPorcentoContinua(frequenciaSimplesContinua, vetFreq_porcento, freqReduce)
     for (let i = 0; i < linhas; i++) {
@@ -410,16 +431,26 @@ function descritiva() {
     mediana = inicioMediana[indiceVetor] + (((posicaoMediana - facArray[indiceVetor - 1]) / frequenciaSimplesContinua[indiceVetor]) * ic)
 
     // moda
-    let modaCont = 0
-    for (let i = 0; i < frequenciaSimplesContinua.length; i++) {
-      if (frequenciaSimplesContinua[i] < modaCont) {
-        modaCont++
-      } else {
-        continue
-      }
-    }
 
-    moda = fimVetor[modaCont]
+    let modaAux = Math.max.apply(null, frequenciaSimplesContinua)
+    console.log(buscaBinaria(frequenciaSimplesContinua, modaAux))
+
+
+    console.log(frequenciaSimplesContinua + ' consertar moda')
+    /* let modaCont = frequenciaSimplesContinua[0]
+     for (let i = 0; i < frequenciaSimplesContinua.length; i++) {
+       if (frequenciaSimplesContinua[i] < modaCont) {
+         modaCont++
+       } else {
+         continue
+       }
+     }
+ */
+
+    //console.log(mouda + ' mouda')
+    moda = (fimVetor[buscaBinaria(frequenciaSimplesContinua, modaAux)])
+    console.log(fimVetor)
+
 
     //medidas de dispersão
 

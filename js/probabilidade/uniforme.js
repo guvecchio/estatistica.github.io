@@ -24,7 +24,7 @@ let distrib_Nomal = () => {
     let dp = Math.sqrt((((maximo - minimo)) ** 2 / 12)).toFixed(2)
 
     function prob() {
-        return ((1 / (maximo - minimo)) * intervalo) * 100
+        return Math.floor((((1 / (maximo - minimo)) * intervalo) * 100).toFixed(2))
     }
 
 
