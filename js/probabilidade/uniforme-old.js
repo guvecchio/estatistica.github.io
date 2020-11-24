@@ -1,4 +1,4 @@
-const btnUniforme = document.getElementById('botao_uniforme')
+const btnUniforme = document.getElementById('botao_normal')
 
 let distrib_Nomal = () => {
     const maximo = document.getElementById('pontoMaximo').value
