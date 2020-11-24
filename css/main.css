@@ -131,7 +131,7 @@ body{
 
 /*Campos de dados*/
 
-.eDados, .eAmostra, .eSucesso, .eFracasso, .eDesvio, .eIntervalo, .pMinimo, .pMaximo,
+.eDados, .eOrdinal, .eAmostra, .eSucesso, .eFracasso, .eDesvio, .eIntervalo, .pMinimo, .pMaximo,
 .coleta, .tipo, .separatriz, .button, .vIntervalo, .eMedia, .eEvento, .valorY, .valorX,
 .button-primary, .button-personalizado, .limpar, .medidas, .categories-resultados, .resultados-totais {
     width: 100%;

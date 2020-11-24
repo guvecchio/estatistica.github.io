@@ -20,7 +20,7 @@ function freqPorcento(repeticao, vetor) { // função para frequencia normal por
   vetFreq_porcento = vetFreq_porcento.map(x => parseFloat(x)) // conversão para number
 }
 
-let novoVetor = [], vetorFiltrado = [], vetorFrequencia_Simples = [], vetorSortido, mediana, moda = [], mediaAux = 0
+let novoVetor = [], vetorFiltrado = [], vetorFrequencia_Simples = [], vetorSortido, mediana, moda, mediaAux = 0
 
 let media
 let resultadoSeparatriz
@@ -59,10 +59,10 @@ function descritiva() {
     if (tipoDado.value === "qualitativaOrdinal") {
       var inputOrdinal = document.createElement('input');
       var botao = document.createElement('button')
+      botao.innerText = 'ORDENAR'; // ESSA LINHA
 
       document.getElementById('ordenarBTN').appendChild(inputOrdinal)
       document.getElementById('ordenarBTN').appendChild(botao)
-      botao.innerText = 'ORDENAR'; // ESSA LINHA
 
       inputOrdinal.setAttribute('placeholder', 'Inserida separado por ; a forma como quer ordenar o resultado: Ex: ótimo; bom; ruim.') // ESSA LINHA
       inputOrdinal.setAttribute('id', 'entradaOrdinal')
@@ -75,7 +75,7 @@ function descritiva() {
         var vetorUser = []
 
         // comparação e reodernação pelo usuario
-        for (let i = 0; i < entradaOrdinal.length; i++) {  // função que compara um item do vetor com outro e caso for true, adiciona um contador para fazer frequencia normal
+        for (i = 0; i < entradaOrdinal.length; i++) {  // função que compara um item do vetor com outro e caso for true, adiciona um contador para fazer frequencia normal
           for (let x = 0; x < vetorSortido.length; x++) {
             if (entradaOrdinal[i] === vetorSortido[x]) {
               vetorUser.push(vetorSortido[x])
@@ -84,58 +84,44 @@ function descritiva() {
             }
           }
         }
+        vetorSortido = vetorUser
 
-        console.log(entradaOrdinal + ' entrada ordinal')
-        console.log(vetorUser.length == vetorSortido.length)
-        if (vetorUser.length != vetorSortido.length) {
-          alert('Os dados estão errados ou incompletos. Verifique e tente novamente.')
+        let somaMediana = (vetorSortido.length / 2) - 1
+        if (vetorSortido.length % 2 == 0) {
+          mediana = [vetorSortido[somaMediana], vetorSortido[somaMediana + 1]]
         } else {
-          console.log(vetorSortido)
-          console.log(vetorUser)
-          vetorSortido = vetorUser
-
-          let somaMediana = (vetorSortido.length / 2) - 1
-          if (vetorSortido.length % 2 == 0) {
-            mediana = [vetorSortido[somaMediana], vetorSortido[somaMediana + 1]]
-          } else {
-            somaMediana = Math.trunc(somaMediana)
-            mediana = vetorSortido[somaMediana]
-          }
-
-          //----------------------------FREQUENCIAS------------------------
-
-          let x
-          for (let i = 0; i < vetorSortido.length; i = x) {  //função que compara um item do vetor com outro e caso for true, adiciona um contador para fazer frequencia normal
-            let freqCont = 1;
-            for (x = i + 1; x < vetorSortido.length; x++) {
-              if (vetorSortido[i] == vetorSortido[x]) {
-                freqCont++;
-              } else {
-                break;
-              }
-            }
-            fac += freqCont // acumulador para frequencia acumulada
-            facArray.push(fac) // push no array de frequencia acumulada
-            vetorFrequencia_Simples.push(freqCont); // push no array de frequencia normal
-          }
-          let maior = Math.max.apply(null, vetorFrequencia_Simples)
-          let indiceMaior = (vetorFrequencia_Simples.indexOf(maior))
-
-          //------------------------FIM FREQUENCIAS -------------------------
-
-          vetorFiltrado = vetorSortido.filter((este, i) => vetorSortido.indexOf(este) === i) // tira todos itens repetidos
-          console.log(vetorFiltrado === entradaOrdinal)
-          console.log(vetorFiltrado)
-          console.log(entradaOrdinal)
-          moda = vetorFiltrado[indiceMaior]
-
-          criarTabela()
+          somaMediana = Math.trunc(somaMediana)
+          mediana = vetorSortido[somaMediana]
         }
-      }
-      )
+
+        //----------------------------FREQUENCIAS------------------------
+
+        let x
+        for (let i = 0; i < vetorSortido.length; i = x) {  //função que compara um item do vetor com outro e caso for true, adiciona um contador para fazer frequencia normal
+          let freqCont = 1;
+          for (x = i + 1; x < vetorSortido.length; x++) {
+            if (vetorSortido[i] == vetorSortido[x]) {
+              freqCont++;
+            } else {
+              break;
+            }
+          }
+          fac += freqCont // acumulador para frequencia acumulada
+          facArray.push(fac) // push no array de frequencia acumulada
+          vetorFrequencia_Simples.push(freqCont); // push no array de frequencia normal
+        }
+        let maior = Math.max.apply(null, vetorFrequencia_Simples)
+        let indiceMaior = (vetorFrequencia_Simples.indexOf(maior))
+
+        //------------------------FIM FREQUENCIAS -------------------------
+
+        vetorFiltrado = vetorSortido.filter((este, i) => vetorSortido.indexOf(este) === i) // tira todos itens repetidos
+
+        moda = vetorFiltrado[indiceMaior]
+
+        criarTabela()
+      })
     }
-
-
     else if (tipoDado.value === "qualitativaNominal") { //selecionador de quantitativa ou qualitativa
 
       //---------------MEDIANA-------------
@@ -173,16 +159,8 @@ function descritiva() {
       //------------------------FIM FREQUENCIAS -------------------------
 
       vetorFiltrado = vetorSortido.filter((este, i) => vetorSortido.indexOf(este) === i) // tira todos itens repetidos
-      for (let i = 0; i <= vetorFrequencia_Simples.length; i++) {
-        if (vetorFrequencia_Simples[i] == maior) {
-          moda.push(vetorFiltrado[i])
-        }
-        else {
-          continue
-        }
-      }
 
-
+      moda = vetorFiltrado[indiceMaior]
 
       criarTabela()
     }
@@ -240,18 +218,8 @@ function descritiva() {
 
     // moda -------------
 
-    vetorFiltrado = vetorSortido.filter((este, i) => vetorSortido.indexOf(este) === i); // função que filtra o vetor para tirar todos números repetidos
+
     let maior = Math.max.apply(null, vetorFrequencia_Simples)
-    for (let i = 0; i <= vetorFrequencia_Simples.length; i++) {
-      if (vetorFrequencia_Simples[i] == maior) {
-        moda.push(vetorFiltrado[i])
-      }
-      else {
-        continue
-      }
-    }
-    console.log(maior)
-    console.log(moda)
 
 
     let indiceMaior = (vetorFrequencia_Simples.indexOf(maior))
@@ -259,9 +227,9 @@ function descritiva() {
 
 
 
+    vetorFiltrado = vetorSortido.filter((este, i) => vetorSortido.indexOf(este) === i); // função que filtra o vetor para tirar todos números repetidos 
 
-
-    //moda = vetorFiltrado[indiceMaior]
+    moda = vetorFiltrado[indiceMaior]
 
     criarTabela()
 
@@ -269,21 +237,18 @@ function descritiva() {
   //------------------------continua
 
   function quantitativaContinua(array) {
-    console.log(array)
     novoVetor = array.split(";").map(x => parseFloat(x));  //separa o array por ";" e com map() passa tudo para Number float
-    console.log(novoVetor)
+
     const continua = novoVetor.sort((a, b) => a - b); //function que o Glenio me passou para ordernar o vetor por ordem crescente
-    //23;65;36;58;74;5;2;1;5;4;6;8;5;2;2;554;8;5;6;98;65;68;67;69      
-    // 1000; 1234; 1235; 1543; 2345; 2654; 3456; 3567; 5678; 6000; 4326; 4120; 2000; 2000; 1000; 1765; 1990; 2541; 3210; 4280; 5390; 5980; 4234; 3789; 3210; 3876; 1876; 2876; 2165; 2760
-    console.log(continua)
+
     const menor = continua[0], maior = continua[continua.length - 1]
 
     let amplitude = maior - menor, linhas = 0, ic = 0
-    console.log(amplitude + ' amplitude')
+
     const j = Math.trunc(continua.length ** 0.5)
     const i = j - 1
     const k = j + 1
-    console.log(j, i, k)
+
     do {
       amplitude++
       if (amplitude % i == 0) {
@@ -298,11 +263,9 @@ function descritiva() {
         linhas = k, ic = amplitude / k
         break
       }
-    } while (amplitude % ic != 0)//(amplitude < maior)
-    console.log(menor)
-    console.log(ic, linhas)
-    criarTabelaContinua(menor, linhas, ic, continua)
+    } while (amplitude < maior)
 
+    criarTabelaContinua(menor, linhas, ic, continua)
   }
 
   function criarTabelaContinua(menor, linhas, ic, continua) {
@@ -329,7 +292,7 @@ function descritiva() {
     frequenciaAcumulada.innerHTML = "Frequencia Acumulada"
     frequenciaAcumulada_Porcento.innerHTML = "Frequencia Acumulada %"
 
-    let elementos = [menor]//[menor - 1]
+    let elementos = [menor - 1]
     let frequenciaSimplesContinua = [], inicio, fim
 
 
@@ -363,12 +326,9 @@ function descritiva() {
       linha2.appendChild(coluna3);
       linha2.appendChild(coluna4);
       linha2.appendChild(coluna5);
-      if (inicio == 0) inicio = fim
-      !inicio ? inicio = continua[0] : inicio = fim
 
+      !inicio ? inicio = continua[0] - 1 : inicio = fim
       fim = inicio + ic
-
-
 
       fac += frequenciaSimplesContinua[i]
       facArray.push(fac)
@@ -390,7 +350,7 @@ function descritiva() {
     for (let z = 0; z < vetFreq_porcento.length; z++) {
       vetFreq_porcento_fixed.push((vetFreq_porcento[z].toFixed(1)))
     }
-    console.log(fim, inicio)
+
     let chart = new Chart(document.getElementById('myChart'), {
       //tipo de gráfico
       type: 'bar',
@@ -459,7 +419,7 @@ function descritiva() {
     //mediana
 
     let posicaoMediana = Math.round(freqReduce / 2), indiceVetor = 0
-    console.log(posicaoMediana + ' posicao mediana')
+
     for (let i = 0; i < facArray.length; i++) {
 
       if (posicaoMediana <= facArray[i]) {
@@ -469,27 +429,17 @@ function descritiva() {
 
     }
 
-    console.log(indiceVetor + ' indice vetor')
-    console.log(inicioMediana + ' inicio mediana')
-    if (indiceVetor <= 0) {
-      //if(facArray[indiceVetor] < posicaoMediana){
-      mediana = inicioMediana[indiceVetor] + (((posicaoMediana - (facArray[indiceVetor] - facArray[indiceVetor])) / frequenciaSimplesContinua[indiceVetor]) * ic)
-      //} else{
-      //  mediana = inicioMediana[indiceVetor] + (((facArray[indiceVetor] - posicaoMediana) / frequenciaSimplesContinua[indiceVetor]) * ic)
 
-      //}
-    } else {
-      mediana = inicioMediana[indiceVetor] + (((posicaoMediana - facArray[indiceVetor - 1]) / frequenciaSimplesContinua[indiceVetor]) * ic)
-    }
-    console.log(mediana + ' mediana')
+    mediana = inicioMediana[indiceVetor] + (((posicaoMediana - facArray[indiceVetor - 1]) / frequenciaSimplesContinua[indiceVetor]) * ic)
+
     // moda
 
     let modaAux = Math.max.apply(null, frequenciaSimplesContinua)
     console.log(buscaBinaria(frequenciaSimplesContinua, modaAux))
 
 
-    console.log(modaAux)
-    /* let modaCont = uenciaSimplesContinua[0]
+    console.log(frequenciaSimplesContinua + ' consertar moda')
+    /* let modaCont = frequenciaSimplesContinua[0]
      for (let i = 0; i < frequenciaSimplesContinua.length; i++) {
        if (frequenciaSimplesContinua[i] < modaCont) {
          modaCont++
@@ -498,12 +448,9 @@ function descritiva() {
        }
      }
  */
-    let auxiliarModa = (frequenciaSimplesContinua.indexOf(modaAux))
-    console.log(typeof (modaAux))
+
     //console.log(mouda + ' mouda')
-    console.log(frequenciaSimplesContinua)
-    let moda = fimVetor[auxiliarModa]
-    console.log(moda + ' moda')
+    moda = (fimVetor[buscaBinaria(frequenciaSimplesContinua, modaAux)])
     console.log(fimVetor)
 
 
@@ -546,33 +493,29 @@ function descritiva() {
     }
     porcento = (100 / partesIguais)
     let medidaPorcento = (porcento * medidasUsuario) / 100
-    posicao = (freqReduce * medidaPorcento)
-    console.log(!indiceVetor)
+    posicao = freqReduce * medidaPorcento
+
     for (let i = 0; i < facArray.length; i++) {
       if (posicao <= facArray[i]) {
-
-        if (indiceVetor == 0) resultadoSeparatriz = (inicioMediana[i] + (((posicao - 0) / frequenciaSimplesContinua[indiceVetor]) * ic)).toFixed(2)
-        else if (indiceVetor != 0) resultadoSeparatriz = (inicioMediana[i] + (((posicao - facArray[indiceVetor - 1]) / frequenciaSimplesContinua[indiceVetor]) * ic)).toFixed(2)
+        if (!indiceVetor - 1) {
+          resultadoSeparatriz = inicioMediana[i] + (((posicao - facArray[indiceVetor - 2]) / frequenciaSimplesContinua[indiceVetor - 1]) * ic)
+        } else {
+          resultadoSeparatriz = inicioMediana[i] + (((posicao - 0) / frequenciaSimplesContinua[indiceVetor - 1]) * ic)
+        }
         break
       }
-
       else {
         continue
       }
     }
 
-    console.log(inicioMediana, posicao,)
+    document.getElementById('resultadoMedidasSeparatrizes').innerHTML = "Resultado Separatriz: " + resultadoSeparatriz
 
-
-    if (resultadoSeparatriz == undefined) resultadoSeparatriz = 'Separatriz não selecionada'
-
-    document.getElementById('resultadoMedidasSeparatrizes').innerHTML = "<strong>Resultado Separatriz:</strong> " + resultadoSeparatriz
-
-    document.getElementById('desvio_Padrao').innerHTML = "<strong>Desvio padrão:</strong> " + desvioPadrao.toFixed(1)
-    document.getElementById('coef_Variacao').innerHTML = "<strong>Coeficiente de variação:</strong> " + coeficienteVariacao.toFixed(1) + "%"
-    document.getElementById('moda').innerHTML = "<strong>Moda:</strong> " + moda
-    document.getElementById('media').innerHTML = "<strong>Média:</strong> " + media.toFixed(1)
-    document.getElementById('mediana').innerHTML = "<strong>Mediana:</strong> " + mediana.toFixed(2)
+    document.getElementById('desvio_Padrao').innerHTML = "Desvio padrão: " + desvioPadrao.toFixed(1)
+    document.getElementById('coef_Variacao').innerHTML = "Coeficiente de variação: " + coeficienteVariacao.toFixed(1) + "%"
+    document.getElementById('moda').innerHTML = "Moda: " + moda
+    document.getElementById('media').innerHTML = "Média: " + media.toFixed(1)
+    document.getElementById('mediana').innerHTML = "Mediana: " + mediana.toFixed(2)
 
   }
 
@@ -732,15 +675,15 @@ function descritiva() {
 
     if (tipoDado.value === "qualitativaOrdinal" || tipoDado.value === "qualitativaNominal") {
 
-      media = "Não há média"
-      let desvioPadrao = "Não há desvio padrão"
-      let coeficienteVariacao = "Não há coeficiente de variação"
+      media = "Não há Media"
+      let desvioPadrao = "Não há Desvio Padrão"
+      let coeficienteVariacao = "Não há Coeficiente de Variação"
 
-      document.getElementById('desvio_Padrao').innerHTML = "<strong>Desvio padrão:</strong> " + desvioPadrao
-      document.getElementById('coef_Variacao').innerHTML = "<strong>Coeficiente de variação:</strong> " + coeficienteVariacao
-      document.getElementById('moda').innerHTML = "<strong>Moda:</strong> " + moda
-      document.getElementById('media').innerHTML = "<strong>Média:</strong> " + media
-      document.getElementById('mediana').innerHTML = "<strong>Mediana:</strong> " + mediana
+      document.getElementById('desvio_Padrao').innerHTML = "Desvio padrão: " + desvioPadrao
+      document.getElementById('coef_Variacao').innerHTML = "Coeficiente de variação: " + coeficienteVariacao
+      document.getElementById('moda').innerHTML = "Moda: " + moda
+      document.getElementById('media').innerHTML = "Média: " + media
+      document.getElementById('mediana').innerHTML = "Mediana: " + mediana
 
     }
     else if (tipoDado.value == 'quantitativaDiscreta') {
@@ -760,11 +703,11 @@ function descritiva() {
 
       coeficienteVariacao = (desvioPadrao / media) * 100
 
-      document.getElementById('desvio_Padrao').innerHTML = "<strong>Desvio padrão:</strong> " + desvioPadrao.toFixed(2)
-      document.getElementById('coef_Variacao').innerHTML = "<strong>Coeficiente de variação:</strong> " + Math.round(coeficienteVariacao) + "%"
-      document.getElementById('moda').innerHTML = "<strong>Moda:</strong> " + moda
-      document.getElementById('media').innerHTML = "<strong>Média:</strong> " + media
-      document.getElementById('mediana').innerHTML = "<strong>Mediana:</strong> " + mediana
+      document.getElementById('desvio_Padrao').innerHTML = "Desvio padrão: " + desvioPadrao.toFixed(2)
+      document.getElementById('coef_Variacao').innerHTML = "Coeficiente de variação: " + Math.round(coeficienteVariacao) + "%"
+      document.getElementById('moda').innerHTML = "Moda: " + moda
+      document.getElementById('media').innerHTML = "Média: " + media
+      document.getElementById('mediana').innerHTML = "Mediana: " + mediana
 
     }
 
@@ -793,9 +736,7 @@ function descritiva() {
       }
     }
 
-    if (resultadoSeparatriz == undefined) resultadoSeparatriz = 'Não há ou não foi possível encontrar a separatriz'
-
-    document.getElementById('resultadoMedidasSeparatrizes').innerHTML = "<strong>Resultado Separatriz:</strong> " + resultadoSeparatriz
+    document.getElementById('resultadoMedidasSeparatrizes').innerHTML = "Resultado Separatriz: " + resultadoSeparatriz
   }
 }
 
